@@ -4,6 +4,31 @@ from youtube import youtube_downloader
 from twitter import twitter_downloader
 
 
+class App(Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry = "300x300"
+        self.title = "Downloader"
+        
+        self.frames = {}
+
+        for F in (MainPage, ConfigPage):
+            # frame = F(self, controller)
+
+        
+class MainPage(Frame):
+    ...
+
+
+class ConfigPage(Frame):
+    
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
+
+'''
 def select():
     if v.get() == "1":
         youtube_downloader(link.get())
@@ -47,3 +72,5 @@ link_button.pack()
 
 
 root.mainloop()
+
+'''
