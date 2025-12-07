@@ -1,4 +1,4 @@
-from rich import print
+# from rich import print
 
 
 def set_color(text, color=None):
