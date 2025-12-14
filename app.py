@@ -7,8 +7,37 @@ from twitter import twitter_downloader
 class App(Tk):
     def __init__(self):
         super().__init__()
-        self.geometry("300x300")
         self.title("Downloader")
+
+        self.v = StringVar(self, "1")
+        self.count = 1
+
+        self.values = {
+            "YouTube": "1",
+            "X/Twitter": "2"
+        }
+
+
+        self.title_lbl = Label(self, text="Downloader a media :)")
+
+        self.link_lbl = Label(self, text="Paste a link here:")
+        self.link_entry = Entry(self)
+        self.link_btn = Button(self, text="Download")
+
+        self.platform_lbl = Label(self, text="Choose a platform:")
+        for (text, value) in self.values.items():
+            Radiobutton(self,
+                        text=text,
+                        variable=self.v,
+                        value=value).grid(row=2, column=self.count)
+            self.count += 1
+
+        self.title_lbl.grid(row=0, column=1)
+        self.link_lbl.grid(row=1, column=0, sticky="w")
+        self.link_entry.grid(row=1, column=1)
+        self.link_btn.grid(row=1, column=2)
+
+        self.platform_lbl.grid(row=2, column=0)
 
 
 if __name__ == "__main__":
