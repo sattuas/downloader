@@ -18,11 +18,12 @@ class App(Tk):
         }
 
 
+
         self.title_lbl = Label(self, text="Downloader a media :)")
 
         self.link_lbl = Label(self, text="Paste a link here:")
         self.link_entry = Entry(self)
-        self.link_btn = Button(self, text="Download")
+        self.link_btn = Button(self, text="Search")
 
         self.platform_lbl = Label(self, text="Choose a platform:")
         for (text, value) in self.values.items():
@@ -32,12 +33,17 @@ class App(Tk):
                         value=value).grid(row=2, column=self.count)
             self.count += 1
 
+        self.list_box = Listbox(self, height=10)
+        self.list_box.insert(1, "Select a resolution")
+
         self.title_lbl.grid(row=0, column=1)
         self.link_lbl.grid(row=1, column=0, sticky="w")
         self.link_entry.grid(row=1, column=1)
         self.link_btn.grid(row=1, column=2)
 
         self.platform_lbl.grid(row=2, column=0)
+
+        self.list_box.grid(row=3, column=0, columnspan=3, sticky="ew")
 
 
 if __name__ == "__main__":
