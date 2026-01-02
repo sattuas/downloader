@@ -33,8 +33,10 @@ class App(Tk):
                         value=value).grid(row=2, column=self.count)
             self.count += 1
 
-        self.list_box = Listbox(self, height=10)
+        self.list_box = Listbox(self)
         self.list_box.insert(1, "Select a resolution")
+
+        self.download_btn = Button(self, text="Download")
 
         self.title_lbl.grid(row=0, column=1)
         self.link_lbl.grid(row=1, column=0, sticky="w")
@@ -44,6 +46,8 @@ class App(Tk):
         self.platform_lbl.grid(row=2, column=0)
 
         self.list_box.grid(row=3, column=0, columnspan=3, sticky="ew")
+        
+        self.download_btn.grid(row=4, column=1)
 
 
 if __name__ == "__main__":
