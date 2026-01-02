@@ -21,7 +21,8 @@ def youtube_downloader(url):
 
         videos = []
         for video in yt.streams.filter(file_extension="mp4", only_video=True):
-            videos.append(video)
+            if video.video_codec.startswith("avc1"):
+                videos.append(video)
 
         count = 0
         for res in videos:
