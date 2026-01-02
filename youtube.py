@@ -4,8 +4,24 @@ import os
 from utils import *
 
 
-def youtube_downloader(url):
+class YouTube:
+    def __init__(self, url):
+        self.url = YouTube(url)
 
+    def download_audio(self):
+        audios = []
+        audios = self.url.streams.filter(only_audio=True, file_extension="webm")
+        audios = sorted(audios, key=lambda s: int(s.abr.replace('kbps', '')), reverse=True)
+        
+        audio_m4a = audios[0]
+        audio_m4a.download(filename="audio.m4a")
+
+        mp3_converter = AudioFileClip("audio.m4a")
+        mp3_converter.write_audiofile("audio_converted.mp3", logger=None)
+        mp3_converter.close()
+
+'''
+def youtube_downloader(url):
     if url:
         yt = YouTube(url)
 
@@ -61,3 +77,5 @@ def youtube_downloader(url):
             print('arquivo não encontrado D:')
     else:
         return 'erro!'
+    
+'''
