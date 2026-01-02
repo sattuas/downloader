@@ -4,7 +4,7 @@ import os
 from utils import *
 
 
-class YouTube:
+class YouTubeDownload:
     def __init__(self, url):
         self.url = YouTube(url)
 
@@ -20,20 +20,35 @@ class YouTube:
         mp3_converter.write_audiofile("audio_converted.mp3", logger=None)
         mp3_converter.close()
 
+    @staticmethod
+    def get_resolutions(url):
+        url = YouTube(url)
+
+        videos = []
+
+        for video in url.streams.filter(file_extension="mp4", only_video=True):
+            if video.video_codec.startswith("avc1"):
+                videos.append(video)
+
+        return videos
+
+    def download_video(self, videos, option):
+        ys_mp4 = videos[option - 1]
+        ys_mp4.download(filename="video.mp4")
+
+        video = VideoFileClip("video.mp4")
+        audio = AudioFileClip("audio_converted.mp3")
+
+        audio = audio.with_duration(video.duration)
+        video_with_audio = video.with_audio(audio)
+
+        video_with_audio.write_videofile("download.mp4", codec="libx264", audio_codec="aac", logger=None)
+
+
 '''
 def youtube_downloader(url):
     if url:
         yt = YouTube(url)
-
-        audios = []
-        audios = yt.streams.filter(only_audio=True, file_extension="webm")
-        audios = sorted(audios, key=lambda s: int(s.abr.replace('kbps', '')), reverse=True)
-        ys_mp3 = audios[0]
-        ys_mp3.download(filename="audio.m4a")
-
-        converter = AudioFileClip("audio.m4a")
-        converter.write_audiofile("audio_converted.mp3", logger=None)
-        converter.close()
 
         videos = []
         for video in yt.streams.filter(file_extension="mp4", only_video=True):

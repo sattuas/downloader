@@ -1,13 +1,17 @@
 from tkinter import *
 from tkinter.ttk import *
-from youtube import youtube_downloader
+from youtube import YouTubeDownload
 from twitter import twitter_downloader
 
 
 class App(Tk):
     def __init__(self):
+        self.yt = None
+
         super().__init__()
         self.title("Downloader")
+
+        self.link = StringVar()
 
         self.v = StringVar(self, "1")
         self.count = 1
@@ -17,13 +21,11 @@ class App(Tk):
             "X/Twitter": "2"
         }
 
-
-
         self.title_lbl = Label(self, text="Downloader a media :)")
 
         self.link_lbl = Label(self, text="Paste a link here:")
-        self.link_entry = Entry(self)
-        self.link_btn = Button(self, text="Search")
+        self.link_entry = Entry(self, textvariable=self.link)
+        self.link_btn = Button(self, text="Search", command=self.search_video)
 
         self.platform_lbl = Label(self, text="Choose a platform:")
         for (text, value) in self.values.items():
@@ -48,6 +50,16 @@ class App(Tk):
         self.list_box.grid(row=3, column=0, columnspan=3, sticky="ew")
         
         self.download_btn.grid(row=4, column=1)
+
+    def search_video(self):
+        videos = YouTubeDownload.get_resolutions(self.link.get())
+
+        self.list_box.delete(0, 'end')
+
+        count = 0
+        for i in videos:
+            self.list_box.insert(count, i.resolution)
+            count += 1
 
 
 if __name__ == "__main__":
